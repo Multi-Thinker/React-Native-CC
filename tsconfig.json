@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "jsx": "react-native",
+    "strict": false,
+    "esModuleInterop": false,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": false,
+    "noEmit": true,
+    "isolatedModules": false,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./src",
+    "paths": {
+      "~/*": ["*"]
+    },
+    "types": ["react", "react-native"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/App.tsx"],
+  "exclude": ["node_modules"]
+}
