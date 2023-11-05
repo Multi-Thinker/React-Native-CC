@@ -3,14 +3,14 @@ import {Text, View, Image, TouchableOpacity} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {useNavigation} from '@react-navigation/native';
 
-export const textStyle = {
+export const textStyle: any = {
   fontSize: 18,
   fontFamily: 'fcRounded',
   color: '#000',
   textAlign: 'center',
 };
 const CardsNotFound = () => {
-  const navigation = useNavigation();
+  const navigation: any = useNavigation();
   return (
     <View style={[t.flex1, t.flexRow, t.itemsCenter, t.selfCenter]}>
       <View

@@ -10,7 +10,8 @@ export type ImageTypes =
   | 'omise'
   | 'verified-by-master'
   | 'verified-by-visa'
-  | 'visa';
+  | 'visa'
+  | '';
 
 export const Icon = ({
   width = 66,
@@ -24,7 +25,7 @@ export const Icon = ({
   style?: {[k: string]: string};
 }) => {
   let baseURL = '../../../assets/images/';
-  const imageMethods = {
+  const imageMethods: any = {
     add: () => require(`${baseURL}add.png`),
     back: () => require(`${baseURL}back.png`),
     'card-placeholder': () => require(`${baseURL}card-placeholder.png`),

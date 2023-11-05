@@ -31,7 +31,7 @@ function Nav({
   title?: string;
   hideAdd?: boolean;
 }): JSX.Element {
-  const navigation = useNavigation();
+  const navigation: any = useNavigation();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleBack = () => {
     if (navigation.canGoBack()) {
