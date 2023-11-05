@@ -5,18 +5,25 @@ import {t} from 'react-native-tailwindcss';
 import CreditCardNumber from './CreditCardNumber';
 import {Icon, ImageTypes} from './Icons';
 import * as Yup from 'yup';
+import {deleteItem} from '../../utils/Storage';
 
 const CreditCard = ({
   name,
   expires,
   type = 'master',
-  lastFourDigits = '0000',
+  number,
+  onPress,
+  active = false,
 }: {
   name: string;
   expires: string;
   type: ImageTypes;
-  lastFourDigits: string;
+  number: number;
+  onPress: (e: number) => void;
+  active?: boolean;
 }) => {
+  const lastFourDigits = number.toString().slice(-4);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [shouldPay, setShouldPay] = useState(false);
   const [amount, setAmount] = useState('');
   const [error, setError] = useState(null);
@@ -51,6 +58,7 @@ const CreditCard = ({
           paddingVertical: 23,
           minHeight: 179,
           borderRadius: 30,
+          maxWidth: 420,
           shadowColor: '#000',
         },
       ]}>
@@ -58,11 +66,12 @@ const CreditCard = ({
         activeOpacity={1}
         onPress={() => {
           setShouldPay(true);
+          onPress(number);
           setError('');
           setAmount(null);
         }}
         style={[t.wFull]}>
-        {!shouldPay ? (
+        {!active ? (
           <>
             <View style={[t.wFull]}>
               <Icon image={type} />
@@ -90,7 +99,7 @@ const CreditCard = ({
           </>
         ) : (
           <>
-            <View style={[t.flex]}>
+            <View style={[t.flex, t.wFull]}>
               <View
                 style={[
                   t.flexRow,
@@ -111,8 +120,18 @@ const CreditCard = ({
                 <Button title="Pay" onPress={handlePay} />
                 <Button
                   title="Cancel"
+                  color={'green'}
+                  onPress={() => {
+                    setShouldPay(false);
+                    onPress(0);
+                  }}
+                />
+                <Button
+                  title="Delete"
                   color={'red'}
-                  onPress={() => setShouldPay(false)}
+                  onPress={async () => {
+                    await deleteItem(number);
+                  }}
                 />
               </View>
               {error && <Text style={{color: 'red'}}>{error}</Text>}

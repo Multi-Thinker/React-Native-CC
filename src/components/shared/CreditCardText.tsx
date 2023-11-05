@@ -20,7 +20,11 @@ export const TextContainer = ({
 }: TextProps) => {
   return (
     <View style={[t.hFull, {width: containerWidth}]}>
-      <Text style={{fontSize, color, ...textStyle}}>{text}</Text>
+      <Text
+        style={[t.flexRow, {fontSize, color, ...textStyle}]}
+        numberOfLines={1}>
+        {text.length >= 20 ? text.slice(0, 20) + '...' : text}
+      </Text>
     </View>
   );
 };
