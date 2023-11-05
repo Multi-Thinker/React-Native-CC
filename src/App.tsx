@@ -1,54 +1,30 @@
-import React, {useState} from 'react';
-import {View, StatusBar, ScrollView} from 'react-native';
-import {t} from 'react-native-tailwindcss';
-import Nav from './components/Nav';
-import type {Cards} from '../types/Cards';
-import CardsNotFound from './components/CardsNotFound';
-import CreditCardInfo from './components/shared/CreditCardInfo';
+import React from 'react';
+import {StatusBar} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+import AddNew from './pages/AddNew';
+import Home from './pages/Home';
+const Stack = createNativeStackNavigator();
 
 function App(): JSX.Element {
   StatusBar.setHidden(true);
-  const [cardsData, setCardsData] = useState<Cards[]>(null);
-  const hasCardData = Array.isArray(cardsData) && cardsData?.length > 0;
+
   return (
-    <View style={[t.bgWhite, t.wFull, t.hFull, t.flex1]}>
-      <Nav />
-      {/* {!hasCardData && <CardsNotFound />} */}
-      <ScrollView style={[t.flex1, t.hScreen, t.flexGrow]}>
-        <View style={[t.flex1, t.hFull, t.mX4, t.mT4, t.itemsCenter]}>
-          <CreditCardInfo
-            type="master"
-            name="Ty Lee"
-            expires="12/24"
-            lastFourDigits="1234"
-          />
-          <CreditCardInfo
-            type="master"
-            name="Ty Lee"
-            expires="12/24"
-            lastFourDigits="1234"
-          />
-          <CreditCardInfo
-            type="master"
-            name="Ty Lee"
-            expires="12/24"
-            lastFourDigits="1234"
-          />
-          <CreditCardInfo
-            type="master"
-            name="Ty Lee"
-            expires="12/24"
-            lastFourDigits="1234"
-          />
-          <CreditCardInfo
-            type="master"
-            name="Ty Lee"
-            expires="12/24"
-            lastFourDigits="1234"
-          />
-        </View>
-      </ScrollView>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="NativeAddNew"
+          component={AddNew}
+          options={{headerShown: false}}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

@@ -109,6 +109,11 @@ const CreditCard = ({
                   style={[t.borderB2, t.mR2]}
                 />
                 <Button title="Pay" onPress={handlePay} />
+                <Button
+                  title="Cancel"
+                  color={'red'}
+                  onPress={() => setShouldPay(false)}
+                />
               </View>
               {error && <Text style={{color: 'red'}}>{error}</Text>}
             </View>

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text, View, Image, TouchableOpacity} from 'react-native';
 import {t} from 'react-native-tailwindcss';
+import {useNavigation} from '@react-navigation/native';
 
 export const textStyle = {
   fontSize: 18,
@@ -9,6 +10,7 @@ export const textStyle = {
   textAlign: 'center',
 };
 const CardsNotFound = () => {
+  const navigation = useNavigation();
   return (
     <View style={[t.flex1, t.flexRow, t.itemsCenter, t.selfCenter]}>
       <View
@@ -31,7 +33,9 @@ const CardsNotFound = () => {
           <Text style={textStyle}>
             We recommend adding a cardfor easy payment
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigation.navigate('NativeAddNew')}>
             <Text style={{...textStyle, color: '#4AD8DA'}}>Add New Card</Text>
           </TouchableOpacity>
         </View>

@@ -1,7 +1,15 @@
-import React from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  Alert,
+  BackHandler,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {textStyle} from './CardsNotFound';
+import {useNavigation} from '@react-navigation/native';
 
 export const navStyle = [
   t.wFull,
@@ -16,9 +24,46 @@ export const navStyle = [
 ];
 
 const imageDimensios = {width: 10, height: 17};
-function Nav({title = 'Cards'}: {title?: string}): JSX.Element {
-  const handleBack = () => {};
-  const addNew = () => {};
+function Nav({
+  title = 'Cards',
+  hideAdd = false,
+}: {
+  title?: string;
+  hideAdd?: boolean;
+}): JSX.Element {
+  const navigation = useNavigation();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleBack = () => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      Alert.alert('Confirm', 'Do you want to exit the app?', [
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        {
+          text: 'Exit',
+          onPress: () => BackHandler.exitApp(),
+        },
+      ]);
+    }
+    return true;
+  };
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      handleBack,
+    );
+
+    return () => backHandler.remove();
+  }, [handleBack, navigation]);
+
+  const addNew = () => {
+    if (hideAdd) return;
+    navigation.navigate('NativeAddNew');
+  };
 
   return (
     <View style={navStyle}>
@@ -31,11 +76,14 @@ function Nav({title = 'Cards'}: {title?: string}): JSX.Element {
       <Text style={{...textStyle, fontWeight: 'bold', fontSize: 17}}>
         {title}
       </Text>
+
       <TouchableOpacity onPress={addNew}>
-        <Image
-          source={require('../../assets/images/add.png')}
-          {...imageDimensios}
-        />
+        {!hideAdd && (
+          <Image
+            source={require('../../assets/images/add.png')}
+            {...imageDimensios}
+          />
+        )}
       </TouchableOpacity>
     </View>
   );
