@@ -4,3 +4,5 @@ export type Cards = {
   exp: {expMonth: number; expYear: number};
   cvv: number;
 };
+
+export type JSONObject = {[k: string]: string};

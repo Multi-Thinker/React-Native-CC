@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {View, StatusBar} from 'react-native';
+import {View, StatusBar, ScrollView} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import Nav from './components/Nav';
 import type {Cards} from '../types/Cards';
 import CardsNotFound from './components/CardsNotFound';
+import CreditCardInfo from './components/shared/CreditCardInfo';
 
 function App(): JSX.Element {
   StatusBar.setHidden(true);
@@ -12,7 +13,41 @@ function App(): JSX.Element {
   return (
     <View style={[t.bgWhite, t.wFull, t.hFull, t.flex1]}>
       <Nav />
-      {!hasCardData && <CardsNotFound />}
+      {/* {!hasCardData && <CardsNotFound />} */}
+      <ScrollView style={[t.flex1, t.hScreen, t.flexGrow]}>
+        <View style={[t.flex1, t.hFull, t.mX4, t.mT4, t.itemsCenter]}>
+          <CreditCardInfo
+            type="master"
+            name="Ty Lee"
+            expires="12/24"
+            lastFourDigits="1234"
+          />
+          <CreditCardInfo
+            type="master"
+            name="Ty Lee"
+            expires="12/24"
+            lastFourDigits="1234"
+          />
+          <CreditCardInfo
+            type="master"
+            name="Ty Lee"
+            expires="12/24"
+            lastFourDigits="1234"
+          />
+          <CreditCardInfo
+            type="master"
+            name="Ty Lee"
+            expires="12/24"
+            lastFourDigits="1234"
+          />
+          <CreditCardInfo
+            type="master"
+            name="Ty Lee"
+            expires="12/24"
+            lastFourDigits="1234"
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 }

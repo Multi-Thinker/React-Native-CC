@@ -16,7 +16,7 @@ export const navStyle = [
 ];
 
 const imageDimensios = {width: 10, height: 17};
-function Nav(): JSX.Element {
+function Nav({title = 'Cards'}: {title?: string}): JSX.Element {
   const handleBack = () => {};
   const addNew = () => {};
 
@@ -29,7 +29,7 @@ function Nav(): JSX.Element {
         />
       </TouchableOpacity>
       <Text style={{...textStyle, fontWeight: 'bold', fontSize: 17}}>
-        Cards
+        {title}
       </Text>
       <TouchableOpacity onPress={addNew}>
         <Image
