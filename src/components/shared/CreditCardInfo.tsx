@@ -1,11 +1,20 @@
 import React, {useState} from 'react';
-import {Button, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Button,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 import {CreditCardHeading, CreditCardValueHeading} from './CreditCardText';
 import {t} from 'react-native-tailwindcss';
 import CreditCardNumber from './CreditCardNumber';
 import {Icon, ImageTypes} from './Icons';
 import * as Yup from 'yup';
 import {deleteItem} from '../../utils/Storage';
+import makeTransaction from '../../utils/makePayment';
 
 const CreditCard = ({
   name,
@@ -14,6 +23,7 @@ const CreditCard = ({
   number,
   onPress,
   active = false,
+  cvc,
 }: {
   name: string;
   expires: string;
@@ -21,25 +31,48 @@ const CreditCard = ({
   number: number;
   onPress: (e: number) => void;
   active?: boolean;
+  cvc: number;
 }) => {
   const lastFourDigits = number.toString().slice(-4);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [shouldPay, setShouldPay] = useState(false);
   const [amount, setAmount] = useState('');
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const schema = Yup.number()
     .required('Please enter an amount.')
     .typeError('Please enter a valid number.')
     .min(5, 'Minimum amount is 5.')
     .max(100, 'Maximum amount is 100.');
 
-  const performPayment = async () => {};
+  const performPayment = async () => {
+    // omise not reponding
+    // return makeTransaction(
+    //   name,
+    //   number,
+    //   Number(expires.split('/')[0]),
+    //   Number(expires.split('/')[1]),
+    //   cvc,
+    //   Number(amount),
+    // );
+  };
   const handlePay = () => {
+    setLoading(true);
     schema
       .validate(amount)
       .then(async () => {
-        await performPayment();
-        setShouldPay(false);
+        await performPayment()
+          .then(() => {
+            Alert.alert('success', 'payment was made');
+            setShouldPay(false);
+            onPress(0);
+          })
+          .catch(error => {
+            Alert.alert('error', error.message);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       })
       .catch(error => setError(error.message));
   };
@@ -62,6 +95,7 @@ const CreditCard = ({
           shadowColor: '#000',
         },
       ]}>
+      {loading && <ActivityIndicator size="large" color="#0000ff" />}
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => {
@@ -124,6 +158,7 @@ const CreditCard = ({
                   onPress={() => {
                     setShouldPay(false);
                     onPress(0);
+                    setLoading(false);
                   }}
                 />
                 <Button
@@ -131,6 +166,8 @@ const CreditCard = ({
                   color={'red'}
                   onPress={async () => {
                     await deleteItem(number);
+                    onPress(0);
+                    setLoading(false);
                   }}
                 />
               </View>

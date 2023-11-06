@@ -36,6 +36,7 @@ const Home = () => {
                 key={`${k}_card`}
                 type={card.type}
                 name={card.name}
+                cvc={card.cvv}
                 expires={`${card.exp.expMonth}/${card.exp.expYear}`}
                 number={card.number}
               />

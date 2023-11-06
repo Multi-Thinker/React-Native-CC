@@ -6,6 +6,7 @@ export type Cards = {
   exp: {expMonth: number; expYear: number};
   cvv: number;
   type: ImageTypes;
+  token?: string;
 };
 
 export type JSONObject = {[k: string]: string};
