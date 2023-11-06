@@ -13,7 +13,15 @@ const Container = ({
   title?: string;
 }) => {
   return (
-    <View style={[t.bgWhite, t.wFull, t.hScreen, t.flex1, t.itemsCenter]}>
+    <View
+      style={[
+        t.bgWhite,
+        t.wFull,
+        t.hScreen,
+        t.flex1,
+        t.itemsCenter,
+        {fontFace: 'FC Subject Rounded [Non-cml.] Reg'},
+      ]}>
       <Nav hideAdd={hideAdd} title={title} />
       {children}
     </View>
