@@ -51,12 +51,5 @@
 		</array>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
-		<key>UIAppFonts</key>
-		<array>
-			<string>FC Subject Bold.ttf</string>
-			<string>FC Subject Rounded Regular.otf</string>
-			<string>FC Subject Rounded Regular.ttf</string>
-			<string>FC Subject.ttf</string>
-		</array>
 	</dict>
 </plist>
